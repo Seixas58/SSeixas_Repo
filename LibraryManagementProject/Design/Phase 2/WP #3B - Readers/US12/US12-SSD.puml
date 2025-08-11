@@ -1,0 +1,15 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+title US12 System Sequence Diagram
+actor "Anonymous" as User #F2AA4CFF/CE4A7EFF
+participant ":System" as System #F2AA4CFF/CE4A7EFF
+
+activate User
+
+User-> System: send a POST request to register as a reader
+System --> "User": informs operation success
+
+@enduml

@@ -1,0 +1,25 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US06 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "User" as user #3B5323FF/B0C4DEFF
+participant "AuthorController" as ctrl #3B5323FF/B0C4DEFF
+participant "AuthorService" as ser #3B5323FF/B0C4DEFF
+participant "AuthorRepository" as repo #3B5323FF/B0C4DEFF
+activate user
+
+
+user -> ctrl: GET/name to request to search authors by name
+ctrl -> ser: getAuthorByName()
+ser -> repo: getAuthorByName(name)
+repo --> ser: list
+ser --> ctrl: ok
+ctrl -->user: informs operation success
+
+
+@enduml

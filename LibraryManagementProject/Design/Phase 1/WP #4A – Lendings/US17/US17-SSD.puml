@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US17 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+!theme toy
+
+actor "User" as U
+participant ":System" as S #3B5323FF/B0C4DEFF
+
+activate U
+
+
+
+U -> S: User sends a POST to know the details of a lending by his lending number
+S --> U: informs operation sucess
+
+
+@enduml

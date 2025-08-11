@@ -1,0 +1,27 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US16 Sequence Diagram - Return Book
+
+autoactivate on
+autonumber
+
+actor "User" as user #3B5323FF/B0C4DEFF
+participant "LendingController" as ctrl #3B5323FF/B0C4DEFF
+participant "LendingService" as lendingser #3B5323FF/B0C4DEFF
+participant "LendingRepository" as lendingrepo #3B5323FF/B0C4DEFF
+
+activate user
+
+user -> ctrl: POST  /lending/lendingdetails/{lending_id}
+
+ctrl -> lendingser: getLendingRepository()
+lendingser -> lendingrepo: getLendingRepository()
+lendingrepo --> lendingser: lendingRepository
+lendingser -> lendingrepo: findLendingByLendingNumber()
+lendingrepo --> lendingser: lending
+lendingser --> ctrl: ok
+
+ctrl --> user: ok
+
+@enduml

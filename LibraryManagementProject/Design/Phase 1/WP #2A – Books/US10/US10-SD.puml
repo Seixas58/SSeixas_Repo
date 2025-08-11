@@ -1,0 +1,25 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US10 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "User" as user
+participant "BookController" as ctrl
+participant "BookService" as ser
+participant "BookRepository" as repo
+activate user
+
+
+user -> ctrl: GET/genre to request to search books by genre
+ctrl -> ser: getBookByGenre()
+ser -> repo: getBookByGenre(genre)
+repo --> ser: list
+ser --> ctrl: ok
+ctrl -->user: informs operation (in)success
+
+
+@enduml

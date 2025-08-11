@@ -1,0 +1,42 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US12 Class Diagram
+
+
+class UserController #F2AA4CFF/CE4A7EFF {
+}
+
+class UserService #F2AA4CFF/CE4A7EFF{
++UpdateReader():void
+}
+
+interface UserRepository <<interface>> #F2AA4CFF/CE4A7EFF{
++saveUser(user obj): Result
+}
+
+
+class User #F2AA4CFF/CE4A7EFF{
+-name
+-email
+-dateOfBirth
+-phoneNumber
+-GDPR
+-role
++updateUser(string name, string email, string dateOfBirth, int phoneNumber, string GDPRConsent)
+}
+
+class Role #F2AA4CFF/CE4A7EFF {
+-librarian
+-reader
+}
+
+
+UserController..> UserService:uses
+UserService ..>  UserRepository:uses
+UserRepository "1" -->"0..*" User: Records
+User "1" -right- "1" Role : > have
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US10 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "User" as User
+participant ":System" as System
+
+activate User
+
+
+
+User -> System: User sends a GET/genre to search books by genre
+System --> User: informs operation (in)sucess
+
+@enduml

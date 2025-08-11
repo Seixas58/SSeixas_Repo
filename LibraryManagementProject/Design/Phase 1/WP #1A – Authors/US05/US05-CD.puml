@@ -1,0 +1,38 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US05 Class Diagram
+
+
+class AuthorController #3B5323FF/B0C4DEFF {
+}
+
+class AuthorService #3B5323FF/B0C4DEFF{
++getAuthorDetailsByAuthorNumber():void
+}
+
+interface AuthorRepository <<interface>> #3B5323FF/B0C4DEFF{
++getAuthorDetailsByAuthorNumber():author
+}
+
+
+class Author #3B5323FF/B0C4DEFF{
+-name
+-short_bio
+-author_number
+}
+
+class Book #3B5323FF/B0C4DEFF  {
++isbn
++title
++description
++author
+}
+
+Author "1" -->"0..*" Book: belongs to
+AuthorController..> AuthorService:uses
+AuthorService ..>  AuthorRepository:uses
+AuthorRepository "1" -->"1..*" Author: Records
+@enduml

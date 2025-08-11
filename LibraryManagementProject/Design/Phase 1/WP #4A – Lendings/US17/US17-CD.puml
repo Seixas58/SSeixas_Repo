@@ -1,0 +1,50 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US17 Class Diagram
+
+class LendingController #3B5323FF/B0C4DEFF {
+    +POST /lending/lendingdetails(lendingId: long): ResponseEntity<String>
+}
+
+class LendingService #3B5323FF/B0C4DEFF {
+    +getLendingRepository(): LendingRepository
+}
+
+class LendingRepository #3B5323FF/B0C4DEFF {
+    +findLendingByLendingNumber(lendingId: long): Lending
+}
+
+class Lending #3B5323FF/B0C4DEFF {
+    -lendingId: long
+    -book: Book
+    -user: User
+    -startDate: LocalDate
+    -returnDate: LocalDate
+}
+
+
+
+class User #3B5323FF/B0C4DEFF {
+    -readerNumber: long
+    -username: String
+    -password: String
+    -name: String
+    -enabled: boolean
+    -dateOfBirth: LocalDate
+    -phoneNumber: String
+    -gdpr: boolean
+    -authorities: Set<AuthorityRole>
+    -books: List<Book>
+    -genres: List<Genre>
+    -role: String
+}
+
+LendingController --> LendingService: uses
+LendingService --> LendingRepository: uses
+LendingRepository "1" --> "0..*" Lending: records
+Lending "1" --> "1" User: contains
+
+@enduml

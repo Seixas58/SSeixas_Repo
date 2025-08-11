@@ -1,0 +1,19 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+title US14 System Sequence Diagram
+actor "Librarian" as User #F2AA4CFF/CE4A7EFF
+participant ":System" as System #F2AA4CFF/CE4A7EFF
+
+activate User
+
+User-> System: send a GET request to search a reader
+System --> "User": informs operation success
+
+
+
+
+
+@enduml

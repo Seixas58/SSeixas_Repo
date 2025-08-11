@@ -1,0 +1,27 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US13 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user #F2AA4CFF/CE4A7EFF
+participant "UserController" as ctrl #F2AA4CFF/CE4A7EFF
+participant "UserService" as ser #F2AA4CFF/CE4A7EFF
+participant "UserRepository" as rrepo #F2AA4CFF/CE4A7EFF
+activate user
+
+
+user -> ctrl:  request to know a user's details (GET/user/{readerNumber})
+ctrl -> ser: getUserByReaderNumber(readerNumber)
+ser -> rrepo: getUserByReaderNumber(readerNumber)
+rrepo-->ser: reader
+ser -> rrepo: getUserDetails()
+rrepo-->ser: user details given its reader number
+ser --> ctrl: user details
+ctrl -->user: informs operation success
+
+
+@enduml

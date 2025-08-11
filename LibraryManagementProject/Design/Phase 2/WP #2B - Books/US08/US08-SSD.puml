@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US08 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Reader" as User
+participant ":System" as System
+
+activate User
+
+
+
+User -> System: Reader sends a GET/title to search books by title
+System --> User: informs operation (in)sucess
+
+@enduml

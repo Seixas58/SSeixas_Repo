@@ -1,0 +1,25 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US14 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user #F2AA4CFF/CE4A7EFF
+participant "UserController" as ctrl #F2AA4CFF/CE4A7EFF
+participant "UserService" as ser #F2AA4CFF/CE4A7EFF
+participant "UserRepository" as rrepo #F2AA4CFF/CE4A7EFF
+activate user
+
+
+user -> ctrl:  request to search a reader (GET/user/{name})
+ctrl -> ser: getUserByName(name)
+ser -> rrepo: getUserByName(name)
+rrepo --> ser: user
+ser --> ctrl: user
+ctrl -->user: informs operation success
+
+
+@enduml

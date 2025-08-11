@@ -1,0 +1,27 @@
+ @startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US04 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user #3B5323FF/B0C4DEFF
+participant "AuthorController" as ctrl #3B5323FF/B0C4DEFF
+participant "AuthorService" as ser #3B5323FF/B0C4DEFF
+participant "AuthorRepository" as repo #3B5323FF/B0C4DEFF
+activate user
+
+
+user -> ctrl: PUT/author to request the update of an author’s data
+ctrl -> ser: updateAuthor()
+ser -> repo: updateAuthor(name,short_bio)
+repo --> ser: updatedAuthor
+ser -> repo: saveAuthor(author)
+repo --> ser: ok
+ser --> ctrl: ok
+ctrl -->user: informs operation success
+
+
+@enduml

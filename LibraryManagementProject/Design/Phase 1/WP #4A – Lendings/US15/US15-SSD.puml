@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US15 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+!theme toy
+
+actor "Librarian" as L
+participant ":System" as S #3B5323FF/B0C4DEFF
+
+activate S
+
+
+
+L -> S: Librarian sends a POST to lend a book to a reader
+S --> L: informs operation sucess
+
+
+@enduml

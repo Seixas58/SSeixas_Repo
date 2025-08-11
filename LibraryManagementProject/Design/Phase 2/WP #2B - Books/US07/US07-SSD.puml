@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US07 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+
+actor "Librarian" as Librarian
+participant ":System" as System
+
+activate System
+
+
+
+Librarian -> System: Librarian sends a POST to register a book (isbn, title, genre, description, author(s), coverPhoto)
+
+System --> Librarian: informs operation (in)sucess
+
+
+@enduml

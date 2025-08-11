@@ -1,0 +1,78 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US15 Class Diagram
+
+class LendingController #3B5323FF/B0C4DEFF {
+    +POST /lending(lib_id: long, reader_id: long, isbn: String): ResponseEntity<String>
+}
+
+class UserService #3B5323FF/B0C4DEFF {
+    +getUser(readerNumber: long): User
+}
+
+class LendingService #3B5323FF/B0C4DEFF {
+    +checkForOverdueBooks(readerNumber: long): boolean
+    +checkMaximumBooksLent(readerNumber: long): boolean
+    +registerLending(librarianId: long, readerId: long, isbn: String): Lending
+}
+
+class BookService #3B5323FF/B0C4DEFF {
+    +getBook(isbn: String): Book
+}
+
+class UserRepository #3B5323FF/B0C4DEFF {
+    +getUser(readerNumber: long): User
+}
+
+class LendingRepository #3B5323FF/B0C4DEFF {
+    +getOverdueLendings(readerNumber: long): List<Lending>
+    +getActiveLendings(readerNumber: long): List<Lending>
+    +saveLending(lending: Lending): void
+}
+
+class BookRepository #3B5323FF/B0C4DEFF {
+    +getBook(isbn: String): Book
+}
+
+class Lending #3B5323FF/B0C4DEFF {
+    - book: Book
+    - user: User
+    - startDate: LocalDate
+    - returnDate: LocalDate
+}
+
+class Book #3B5323FF/B0C4DEFF {
+    - isbn: String
+    - title: String
+    - description: String
+}
+
+class User #3B5323FF/B0C4DEFF {
+    - readerNumber: long
+    - username: String
+    - password: String
+    - name: String
+    - enabled: boolean
+    - dateOfBirth: LocalDate
+    - phoneNumber: String
+    - gdpr: boolean
+    - authorities: Set<AuthorityRole>
+    - books: List<Book>
+    - genres: List<Genre>
+    - role: String
+}
+
+LendingController --> UserService: uses
+LendingController --> LendingService: uses
+LendingController --> BookService: uses
+UserService --> UserRepository: uses
+LendingService --> LendingRepository: uses
+BookService --> BookRepository: uses
+Lending "1" --> "1" Book: contains
+Lending "1" -->"2" User: contains
+LendingRepository "1" -->"0..*" Lending: records
+
+@enduml

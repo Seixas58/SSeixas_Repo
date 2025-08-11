@@ -1,0 +1,22 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US11 Sequence Diagram
+
+autoactivate on
+autonumber
+
+actor Librarian #F2AA4CFF/CE4A7EFF
+
+participant ":LendingController" as ctrl  #F2AA4CFF/CE4A7EFF
+participant ":LendingService" as srv  #F2AA4CFF/CE4A7EFF
+participant ":LendingRepository" as repo  #F2AA4CFF/CE4A7EFF
+
+Librarian -> ctrl: request top 5 readers (GET /user)
+ctrl -> srv: Find top readers
+srv -> repo: Get all lendings
+repo --> srv: List of lendings
+srv -> srv: Calculate top 5 readers
+srv --> ctrl: List of top 5 readers
+ctrl --> Librarian: ok
+@enduml

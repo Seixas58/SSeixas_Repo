@@ -1,0 +1,33 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US08 Class Diagram
+
+
+class BookController {
+}
+
+class BookService {
++getBookByTitle():void
+}
+
+interface BookRepository <<interface>> {
++getBookByTitle(): list
+}
+
+
+class Book {
++isbn
++title
++description
++author
++coverPhoto
+}
+
+BookRepository "1" -->"0..*" Book: belongs to
+BookController..> BookService:uses
+BookService ..>  BookRepository:uses
+
+@enduml

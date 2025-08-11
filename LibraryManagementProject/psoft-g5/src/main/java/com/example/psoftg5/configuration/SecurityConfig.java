@@ -1,0 +1,211 @@
+/*
+ * Copyright (c) 2022-2022 the original author or authors.
+ *
+ * MIT License
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+package com.example.psoftg5.configuration;
+
+import static java.lang.String.format;
+
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+
+
+import com.example.psoftg5.usermanagement.model.AuthorityRole;
+import com.example.psoftg5.usermanagement.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
+import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
+
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+import lombok.RequiredArgsConstructor;
+
+
+@EnableWebSecurity
+@Configuration
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
+@EnableConfigurationProperties
+@RequiredArgsConstructor
+public class SecurityConfig {
+
+    private final UserRepository userRepo;
+
+    @Value("${jwt.public.key}")
+    private RSAPublicKey rsaPublicKey;
+
+    @Value("${jwt.private.key}")
+    private RSAPrivateKey rsaPrivateKey;
+
+    @Value("${springdoc.api-docs.path}")
+    private String restApiDocPath;
+
+    @Value("${springdoc.swagger-ui.path}")
+    private String swaggerPath;
+
+    @Bean
+    public AuthenticationManager authenticationManager(final UserDetailsService userDetailsService,
+                                                       final PasswordEncoder passwordEncoder) {
+        final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        return username -> userRepo.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(format("User: %s, not found", username)));
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // Enable CORS and disable CSRF
+        http = http.cors(Customizer.withDefaults()).csrf(csrf -> csrf.disable());
+
+        // Set session management to stateless
+        http = http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        // Set unauthorized requests exception handler
+        http = http.exceptionHandling(
+                exceptions -> exceptions.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        .accessDeniedHandler(new BearerTokenAccessDeniedHandler()));
+
+        // Set permissions on endpoints
+        http.authorizeHttpRequests()
+                // Swagger endpoints must be publicly accessible
+                .requestMatchers("/").permitAll().requestMatchers(format("%s/**", restApiDocPath)).permitAll()
+                .requestMatchers(format("%s/**", swaggerPath)).permitAll()
+                // Our public endpoints
+                .requestMatchers("/api/public/**").permitAll() // public assets & end-points
+                .requestMatchers("/api/author/create").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/author/update/{authorNumber}").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/author/get").hasAnyRole(AuthorityRole.LIBRARIAN, AuthorityRole.READER)
+                .requestMatchers("/api/author/authors").hasAnyRole(AuthorityRole.LIBRARIAN,AuthorityRole.READER)
+
+                .requestMatchers("/api/books/create").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/books/{isbn}").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/books").hasAnyRole(AuthorityRole.LIBRARIAN,AuthorityRole.READER)
+                .requestMatchers("/api/books/search").hasAnyRole(AuthorityRole.LIBRARIAN,AuthorityRole.READER)
+                .requestMatchers("/api/books/search/title").hasRole(AuthorityRole.READER)
+                .requestMatchers("/api/books/top").hasRole(AuthorityRole.LIBRARIAN)
+
+                .requestMatchers("/api/user/create").permitAll()
+                .requestMatchers("/api/user/{username}").hasRole(AuthorityRole.READER)
+                .requestMatchers("/api/user/readerNumber/{readerNumber}").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/user/user/{name}").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/top5readers").hasRole(AuthorityRole.LIBRARIAN)
+
+                .requestMatchers("/api/lending/lend").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/lending/return/{lendingNumber}").hasRole(AuthorityRole.READER)
+                .requestMatchers("/api/lending/{lendingNumber}").hasAnyRole(AuthorityRole.LIBRARIAN, AuthorityRole.READER)
+                .requestMatchers("/api/lending/top5").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/lending/average-duration").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/lending/average-lending-per-genre").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/lending/lendings-per-month-by-genre").hasRole(AuthorityRole.LIBRARIAN)
+                .requestMatchers("/api/lending//monthly-lending-per-reader").hasRole(AuthorityRole.LIBRARIAN)
+                .anyRequest().authenticated()
+                // Set up oauth2 resource server
+                .and().httpBasic(Customizer.withDefaults()).oauth2ResourceServer().jwt();
+
+        return http.build();
+    }
+
+    // Used by JwtAuthenticationProvider to generate JWT tokens
+    @Bean
+    public JwtEncoder jwtEncoder() {
+        final JWK jwk = new RSAKey.Builder(this.rsaPublicKey).privateKey(this.rsaPrivateKey).build();
+        final JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwks);
+    }
+
+    // Used by JwtAuthenticationProvider to decode and validate JWT tokens
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(this.rsaPublicKey).build();
+    }
+
+    // Extract authorities from the roles claim
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+
+        final JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtAuthenticationConverter;
+    }
+
+    // Set password encoding schema
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // Used by spring security if CORS is enabled.
+    @Bean
+    public CorsFilter corsFilter() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        final CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+}

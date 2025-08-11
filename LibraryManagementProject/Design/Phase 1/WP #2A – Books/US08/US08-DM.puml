@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title US08 - Domain Model excerpt
+
+hide circle
+hide methods
+
+
+class User   {
++name
++email
++username
++password
++reader_number
++date_of_birth
++phone_number
++gdpr
++librarian_number
+}
+
+class Book   {
++isbn
++title
++description
++author
+}
+
+class Role   {
++librarian
++reader
+}
+
+
+
+User "1..*" -down- "1" Role : < has a
+
+@enduml
+

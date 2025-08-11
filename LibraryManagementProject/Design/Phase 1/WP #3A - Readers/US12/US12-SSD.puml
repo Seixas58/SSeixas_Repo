@@ -1,0 +1,15 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+title US12 System Sequence Diagram
+actor "Reader" as User #F2AA4CFF/CE4A7EFF
+participant ":System" as System #F2AA4CFF/CE4A7EFF
+
+activate User
+
+User-> System: send a PATCH request to update personal data
+System --> "User": informs operation success
+
+@enduml

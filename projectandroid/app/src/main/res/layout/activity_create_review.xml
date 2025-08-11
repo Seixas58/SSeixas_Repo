@@ -1,0 +1,33 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/light_pink">
+
+
+<EditText
+        android:id="@+id/editTextReviewerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:hint="Name of reviewer" />
+
+    <EditText
+        android:id="@+id/editTextReviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Text of Review"
+        android:textColor="@color/black"
+        android:inputType="textMultiLine"
+        android:lines="5" />
+
+    <Button
+        android:id="@+id/buttonSubmitReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        android:text="Add Review" />
+</LinearLayout>

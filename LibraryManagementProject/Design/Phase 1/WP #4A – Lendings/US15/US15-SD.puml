@@ -1,0 +1,57 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US15 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user #3B5323FF/B0C4DEFF
+participant "LendingController" as ctrl #3B5323FF/B0C4DEFF
+participant "UserService" as userser #3B5323FF/B0C4DEFF
+participant "LendingService" as lendingser #3B5323FF/B0C4DEFF
+participant "BookService" as bookser #3B5323FF/B0C4DEFF
+participant "UserRepository" as userrepo #3B5323FF/B0C4DEFF
+participant "LendingRepository" as lendingrepo #3B5323FF/B0C4DEFF
+participant "BookRepository" as bookrepo #3B5323FF/B0C4DEFF
+participant "Lending" as read #3B5323FF/B0C4DEFF
+
+activate user
+
+user -> ctrl: POST  /lending/{librarian_number}/{reader_number}/{isbn}
+
+ctrl -> userser: getUserRepository()
+userser -> userrepo: getUserRepository()
+userrepo --> userser: userRepository
+userser --> ctrl: ok
+
+ctrl -> bookser: getBookRepository()
+bookser -> bookrepo: getBookRepository()
+bookrepo --> bookser: bookRepository
+bookser --> ctrl: ok
+
+ctrl -> lendingser: checkForOverdueBooks()
+lendingser -> userser: getUser(reader_number)
+userser --> lendingser: user
+lendingser -> lendingrepo: getOverdueLendings(reader_number)
+lendingrepo --> lendingser: overdueLendings
+lendingser -> lendingser: check if overdueLendings > 0
+lendingser --> ctrl: ok
+
+ctrl -> lendingser: checkMaximumBooksLent()
+lendingser -> lendingrepo: getActiveLendings(reader_number)
+lendingrepo --> lendingser: activeLendings
+lendingser -> lendingser: check if activeLendings.size() < 3
+lendingser --> ctrl: ok
+
+ctrl -> lendingser: registerLending()
+lendingser -> read: registerLending(lending_number,librarian_number,reader_number,book_title,lending_date,return_date,number_of_days_till_return_date,number_of_days_in_overdue,fine_amount)
+read --> lendingser: return lending
+lendingser -> lendingrepo: saveLending(lending)
+lendingrepo --> lendingser: ok
+lendingser --> ctrl: ok
+
+ctrl --> user: ok
+
+@enduml

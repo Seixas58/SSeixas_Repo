@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US16 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+!theme toy
+
+actor "Reader" as R
+participant ":System" as S #3B5323FF/B0C4DEFF
+
+activate R
+
+
+
+R -> S: Reader sends a POST to return a book
+S --> R: informs operation sucess
+
+
+@enduml

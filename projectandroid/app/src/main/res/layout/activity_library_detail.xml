@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:orientation="vertical">
+
+    <TextView
+            android:id="@+id/libraryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Library Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+    <TextView
+            android:id="@+id/libraryAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Library Address"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+    <TextView
+            android:id="@+id/libraryOpenDays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open Days"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
+
+    <TextView
+            android:id="@+id/libraryOpenTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Open Time"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+
+    <TextView
+            android:id="@+id/libraryCloseTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Close Time"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
+</LinearLayout>

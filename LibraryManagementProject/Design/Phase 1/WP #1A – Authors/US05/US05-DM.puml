@@ -1,0 +1,16 @@
+@startuml
+'https://plantuml.com/class-diagram
+hide circle
+hide methods
+
+!theme toy
+
+title US05 Domain Model excerpt
+
+class Author #3B5323FF/B0C4DEFF  {
++name
++short_bio
++author_number
+}
+
+@enduml

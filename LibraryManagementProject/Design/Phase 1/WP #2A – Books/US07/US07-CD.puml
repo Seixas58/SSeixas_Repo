@@ -1,0 +1,32 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+
+hide circle
+
+title US07 Class Diagram
+
+
+class BookController  {
+}
+
+class BookService {
++registerBook():void
+}
+
+interface BookRepository <<interface>> {
++saveBook(book obj): Result
+}
+
+class Book   {
++isbn
++title
++description
++author
+}
+
+
+BookController..> BookService:uses
+BookService ..>  BookRepository:uses
+BookRepository "1" -->"0..*" Book: Records
+
+@enduml

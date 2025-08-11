@@ -1,0 +1,31 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+hide circle
+hide methods
+title US10 Domain Model
+
+
+class Genre #F2AA4CFF/CE4A7EFF {
+-genreName
+
+}
+class Lending #F2AA4CFF/CE4A7EFF {
+-lendingNumber
+-librarianNumber
+-readerNumber
+-bookTitle
+-lendingDate
+-returnDate
+-number_of_days_till_return_date
+-number_of_days_in_overdue
+-fineAmount
+
+}
+
+
+Genre "1" -left-- "*" Lending
+
+
+
+
+@enduml

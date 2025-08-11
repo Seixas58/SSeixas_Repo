@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Librarian" as Librarian #F2AA4CFF/CE4A7EFF
+participant LendingController #F2AA4CFF/CE4A7EFF
+participant LendingService #F2AA4CFF/CE4A7EFF
+participant LendingRepository #F2AA4CFF/CE4A7EFF
+
+Librarian -> LendingController: Request average lending duration (GET/lendings)
+activate LendingController
+LendingController -> LendingService: getAverageLendingDuration()
+activate LendingService
+LendingService -> LendingRepository: findAllLendings()
+activate LendingRepository
+LendingRepository --> LendingService: List of all lendings
+deactivate LendingRepository
+
+
+LendingService --> LendingController: Average lending duration
+deactivate LendingService
+LendingController --> Librarian: ok
+deactivate LendingController
+
+@enduml

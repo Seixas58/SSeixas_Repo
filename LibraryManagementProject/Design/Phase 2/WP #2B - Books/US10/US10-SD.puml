@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+title: US10 Sequence Diagram
+
+actor Librarian #F2AA4CFF/CE4A7EFF
+participant LendingController #F2AA4CFF/CE4A7EFF
+participant LendingService #F2AA4CFF/CE4A7EFF
+participant LendingRepository #F2AA4CFF/CE4A7EFF
+
+Librarian -> LendingController: request top 5 genres (GET/genre)
+activate LendingController
+LendingController -> LendingService: find top genres
+activate LendingService
+LendingService -> LendingRepository: get all lendings
+activate LendingRepository
+LendingRepository --> LendingService: List of lendings
+deactivate LendingRepository
+LendingService -> LendingService: Process lendings to find top 5
+LendingService --> LendingController: Top 5 genres
+deactivate LendingService
+deactivate LendingController
+
+LendingController --> Librarian: ok
+@enduml

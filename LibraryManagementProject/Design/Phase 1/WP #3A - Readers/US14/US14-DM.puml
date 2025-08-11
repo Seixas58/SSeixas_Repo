@@ -1,0 +1,22 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+hide circle
+hide methods
+title US14 Domain Model
+
+class User #F2AA4CFF/CE4A7EFF{
+-name
+-email
+-dateOfBirth
+-phoneNumber
+-GDPR
+-role
+}
+class Role #F2AA4CFF/CE4A7EFF {
+-librarian
+-reader
+}
+
+User "1" -down- "1" Role : > have
+
+@enduml

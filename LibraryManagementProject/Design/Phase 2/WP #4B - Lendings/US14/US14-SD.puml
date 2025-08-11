@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+title: US14 Sequence Diagram
+
+actor "Librarian" as Librarian #F2AA4CFF/CE4A7EFF
+participant LendingController #F2AA4CFF/CE4A7EFF
+participant LendingService #F2AA4CFF/CE4A7EFF
+participant LendingRepository #F2AA4CFF/CE4A7EFF
+participant BookRepository #F2AA4CFF/CE4A7EFF
+
+Librarian -> LendingController: Request average lending per genre (GET/genre)
+activate LendingController
+LendingController -> LendingService: getAverageLendingPerGenre(month, year)
+activate LendingService
+LendingService -> LendingRepository: findLendingsByMonth(month, year)
+activate LendingRepository
+LendingRepository --> LendingService: List of lendings
+deactivate LendingRepository
+
+LendingService -> BookRepository: findGenresByLendings(list of lendings)
+activate BookRepository
+BookRepository --> LendingService: List of genres
+deactivate BookRepository
+
+
+LendingService --> LendingController: Average lending per genre
+deactivate LendingService
+LendingController --> Librarian: ok
+deactivate LendingController
+@enduml

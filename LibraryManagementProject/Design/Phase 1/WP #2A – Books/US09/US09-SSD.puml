@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US09 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "User" as User
+participant ":System" as System
+
+activate User
+
+
+
+User -> System: User sends a GET/isbn to know an book’s detail by its ISBN
+System --> User: informs operation (in)sucess
+
+
+
+@enduml

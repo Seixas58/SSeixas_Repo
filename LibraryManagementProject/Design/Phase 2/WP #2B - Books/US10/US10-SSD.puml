@@ -1,0 +1,15 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+autoactivate on
+autonumber
+title US10 System Sequence Diagram
+actor "Librarian" as User #F2AA4CFF/CE4A7EFF
+participant ":System" as System #F2AA4CFF/CE4A7EFF
+
+activate User
+
+User-> System: send a GET request to get the top 5 genres
+System --> "User": informs operation success
+
+@enduml

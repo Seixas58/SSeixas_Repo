@@ -1,0 +1,28 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US07 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user
+participant "BookController" as ctrl
+participant "BookService" as ser
+participant "Book" as Book
+participant "BookRepository" as repo
+activate user
+
+
+user -> ctrl: POST/book to request the register of an book
+ctrl -> ser: registerBook()
+ser -> Book: registerBook(isbn, title, genre, description, author(s), coverPhoto)
+Book --> ser: return Book
+ser -> repo: saveBook(Book)
+repo --> ser: ok
+ser --> ctrl: ok
+ctrl -->user: informs operation (in)success
+
+
+@enduml

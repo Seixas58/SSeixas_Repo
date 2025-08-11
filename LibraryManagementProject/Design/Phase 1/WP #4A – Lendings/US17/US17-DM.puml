@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+hide circle
+hide methods
+
+!theme toy
+
+title US17 Domain Model excerpt
+
+class User #3B5323FF/B0C4DEFF  {
++name
++email
++role
++date_of_birth
++phone_number
++gdpr
+}
+
+class Role #3B5323FF/B0C4DEFF  {
++id
+}
+
+class Lending #3B5323FF/B0C4DEFF  {
++lending_number
++librarian_number
++reader_number
++book_title
++lending_date
++return_date
++number_of_days_till_return_date
++number_of_days_in_overdue
++fine_amount
+}
+
+User "1..*" -right- "1" Role : < has a
+User "1..*" -down- "1..*" Lending : < has a
+@enduml

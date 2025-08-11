@@ -1,0 +1,25 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US09 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "User" as user
+participant "BookController" as ctrl
+participant "BookService" as ser
+participant "BookRepository" as repo
+activate user
+
+
+user -> ctrl: GET/isbn to request the book´s detail by his ISBN
+ctrl -> ser: getBookDetailsByIsbn()
+ser --> repo: getBookDetailsByIsbn(isbn)
+repo --> ser: bookDetailsByIsbn
+ser --> ctrl: ok
+ctrl -->user: informs operation (in)success
+
+
+@enduml

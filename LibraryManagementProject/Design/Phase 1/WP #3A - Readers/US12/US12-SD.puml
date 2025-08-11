@@ -1,0 +1,28 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US12 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Reader" as user #F2AA4CFF/CE4A7EFF
+participant "UserController" as ctrl #F2AA4CFF/CE4A7EFF
+participant "UserService" as ser #F2AA4CFF/CE4A7EFF
+participant "User" as us #F2AA4CFF/CE4A7EFF
+participant "UserRepository" as repo #F2AA4CFF/CE4A7EFF
+activate user
+
+
+user -> ctrl: request to update personal data (PATCH/user)
+ctrl -> ser: updateUser()
+ser -> us: updateUser(name, email, dateOfBirth, phoneNumber, GDPRConsent)
+us --> ser:  user
+ser -> repo: saveUser(user)
+repo --> ser: user
+ser --> ctrl: user
+ctrl -->user: informs operation success
+
+
+@enduml

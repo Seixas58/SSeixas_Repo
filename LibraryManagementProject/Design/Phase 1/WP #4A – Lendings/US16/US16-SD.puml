@@ -1,0 +1,55 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US16 Sequence Diagram - Return Book
+
+autoactivate on
+autonumber
+
+actor "Reader" as user #3B5323FF/B0C4DEFF
+participant "LendingController" as ctrl #3B5323FF/B0C4DEFF
+participant "UserService" as userser #3B5323FF/B0C4DEFF
+participant "LendingService" as lendingser #3B5323FF/B0C4DEFF
+participant "BookService" as bookser #3B5323FF/B0C4DEFF
+participant "UserRepository" as userrepo #3B5323FF/B0C4DEFF
+participant "LendingRepository" as lendingrepo #3B5323FF/B0C4DEFF
+participant "BookRepository" as bookrepo #3B5323FF/B0C4DEFF
+participant "Lending" as lend #3B5323FF/B0C4DEFF
+
+activate user
+
+user -> ctrl: POST /lending/returnBook/{reader_number}/{isbn}
+
+ctrl -> userser: getUser(reader_number)
+userser -> userrepo: findById(reader_number)
+userrepo --> userser: user
+userser --> ctrl: user
+
+ctrl -> bookser: getBook(isbn)
+bookser -> bookrepo: findById(isbn)
+bookrepo --> bookser: book
+bookser --> ctrl: book
+
+ctrl -> lendingser: getLending(reader_number, isbn)
+lendingser -> lendingrepo: findByReaderAndBook(reader_number, isbn)
+lendingrepo --> lendingser: lending
+lendingser --> ctrl: lending
+
+ctrl -> lendingser: calculateFine(lending)
+lendingser -> lendingser: calculateFine(lending)
+lendingser --> ctrl: fine
+
+ctrl -> lendingser: processReturn(lending, fine)
+lendingser -> lendingrepo: save(lending)
+lendingrepo --> lendingser: ok
+lendingser --> ctrl: ok
+
+
+ctrl -> bookser: updateBookStatus(book, "available")
+bookser -> bookrepo: save(book)
+bookrepo --> bookser: ok
+bookser --> ctrl: ok
+
+ctrl --> user: response (success/failure, fine)
+
+@enduml

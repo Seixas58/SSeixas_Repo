@@ -1,0 +1,28 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US11 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Anonymous" as user #F2AA4CFF/CE4A7EFF
+participant "UserController" as ctrl #F2AA4CFF/CE4A7EFF
+participant "UserService" as ser #F2AA4CFF/CE4A7EFF
+participant "User" as read #F2AA4CFF/CE4A7EFF
+participant "UserRepository" as urepo #F2AA4CFF/CE4A7EFF
+activate user
+
+
+user -> ctrl: request to register as a reader (POST/user)
+ctrl -> ser: createUser()
+ser -> read: createUser(username, password, name, email, dateOfBirth, phoneNumber, GDPRConsent)
+read --> ser: user
+ser -> urepo: saveUser(user)
+urepo --> ser: user
+ser-->ctrl: user
+ctrl -->user: informs operation success
+
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US03 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user #3B5323FF/B0C4DEFF
+participant "AuthorController" as ctrl #3B5323FF/B0C4DEFF
+participant "AuthorService" as ser #3B5323FF/B0C4DEFF
+participant "Author" as read #3B5323FF/B0C4DEFF
+participant "AuthorRepository" as repo #3B5323FF/B0C4DEFF
+activate user
+
+
+user -> ctrl: POST/author to request the register of an author
+ctrl -> ser: registerAuthor()
+ser -> read: registerAuthor(name,short_bio)
+read --> ser: return author
+ser -> repo: saveAuthor(author)
+repo --> ser: ok
+ser --> ctrl: ok
+ctrl -->user: informs operation success
+
+
+@enduml
+

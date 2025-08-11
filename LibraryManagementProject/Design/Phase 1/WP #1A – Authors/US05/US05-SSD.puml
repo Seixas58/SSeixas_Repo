@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+title US05 - System Sequence Diagram
+
+autoactivate on
+autonumber
+
+!theme toy
+
+actor "User" as U
+participant ":System" as S #3B5323FF/B0C4DEFF
+
+activate U
+
+
+
+U -> S: User sends a GET/id to know an author’s detail by its author number
+S --> U: informs operation sucess
+
+
+
+@enduml

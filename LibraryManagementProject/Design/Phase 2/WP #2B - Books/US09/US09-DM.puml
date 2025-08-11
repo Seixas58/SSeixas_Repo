@@ -1,0 +1,35 @@
+@startuml
+'https://SubscriptionServicetuml.com/class-diagram
+hide circle
+hide methods
+title US09 Domain Model
+
+
+class Book #F2AA4CFF/CE4A7EFF {
+-isbn
+-title
+-genre
+-description
+-author
+
+}
+class Lending #F2AA4CFF/CE4A7EFF {
+-lendingNumber
+-librarianNumber
+-readerNumber
+-bookTitle
+-lendingDate
+-returnDate
+-number_of_days_till_return_date
+-number_of_days_in_overdue
+-fineAmount
+
+}
+
+
+Book "1" -left-- "*" Lending
+
+
+
+
+@enduml

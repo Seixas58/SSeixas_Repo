@@ -1,0 +1,27 @@
+ @startuml
+'https://SubscriptionServicetuml.com/sequence-diagram
+
+title US08 Sequence Diagram
+
+autoactivate on
+autonumber
+
+
+actor "Librarian" as user
+participant "BookController" as ctrl
+participant "BookService" as ser
+participant "BookRepository" as repo
+activate user
+
+
+user -> ctrl: PUT/book to request the update of an book’s data
+ctrl -> ser: updateBook()
+ser -> repo: updateBook(title, genre, description, author(s))
+repo --> ser: updatedBook
+ser -> repo: saveBook(book)
+repo --> ser: ok
+ser --> ctrl: ok
+ctrl -->user: informs operation (in)success
+
+
+@enduml

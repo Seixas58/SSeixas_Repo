@@ -1,0 +1,29 @@
+@startuml
+
+
+title US13 System Sequence Diagram
+actor "Reader" as Reader #F2AA4CFF/CE4A7EFF
+participant BookController #F2AA4CFF/CE4A7EFF
+participant BookService #F2AA4CFF/CE4A7EFF
+participant UserRepository #F2AA4CFF/CE4A7EFF
+participant BookRepository #F2AA4CFF/CE4A7EFF
+
+Reader -> BookController: Request book suggestions based on interests (GET/books)
+activate BookController
+BookController -> BookService: getBookSuggestionsForUser(readerNumber)
+activate BookService
+BookService -> UserRepository: findInterestsByReaderNumber(readerNumber)
+activate UserRepository
+UserRepository --> BookService: List of user interests
+deactivate UserRepository
+
+BookService -> BookRepository: findBooksByInterests(list of interests)
+activate BookRepository
+BookRepository --> BookService: List of suggested books
+deactivate BookRepository
+
+BookService --> BookController: List of book suggestions
+deactivate BookService
+BookController --> Reader:ok
+deactivate BookController
+@enduml
