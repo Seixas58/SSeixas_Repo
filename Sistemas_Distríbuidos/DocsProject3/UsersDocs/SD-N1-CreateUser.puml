@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+!theme toy
+
+title Create User Sequence Diagram
+
+[o-> System: POST/createBookAuthorGenre
+activate System
+System -> System: validates data
+opt valid data
+    [o<--System: 201 (created)
+end opt
+opt invalid data
+    [o<--System:: 4## (Not Found, Bad Request, ...)
+end opt
+
+@enduml

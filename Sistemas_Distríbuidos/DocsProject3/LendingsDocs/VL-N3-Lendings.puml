@@ -1,0 +1,114 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme toy
+interface " " as LendingsDBInter
+
+interface " " as HttpClient
+interface " " as LendingsCompInter
+interface "database" as LendingsDBInter
+
+component "Http Client" as NodeHTTP
+
+component "RabbitMQ" as LendingsComp
+component "LendingsComanndads" as LendingsDB
+
+component "<<LendingsCommands>>" as lends {
+
+    portin "REST API Lendings" as out
+    portin "RabbitMQ" as apiLendings
+    portin "DB" as dbLendings
+
+    component "Routes" as routes
+    component "LendingController" as ctrl
+    component "LendingService" as service
+    component "Lending" as lend
+    component "UsersDBRepository" as uRepo
+    component "LendingReceiver" as sRepo
+    component "LendingsDBRepository" as repo
+    component "UserRepository" as uDriver
+    component "LendingRepository" as driver
+    component "Driver Users DB" as userHTTPDriver
+    component "Driver Lendings DB" as lendDBDriver
+    component "MessageBroker" as lendHTTPDriver
+
+    interface " " as ctrlSer
+    interface " " as routesCtr
+    interface " " as model
+    interface " " as lendDriver
+    interface " " as userDriver
+    interface " " as userHttpInterface
+    interface " " as lendHttpInterface
+    interface " " as lendDBInterface
+    interface " " as userHttpInterface2
+
+    component "BookRepository" as bDriver
+    component "BooksDBRepository" as bRepo
+    component "Driver Books DB" as bookHTTPDriver
+    interface " " as bookDriver
+    interface " " as bookHttpInterface
+    interface " " as bookHttpInterface2
+}
+
+HttpClient -d- out
+LendingsCompInter )-d- apiLendings
+LendingsDBInter )-d- dbLendings
+
+NodeHTTP -d-( HttpClient
+LendingsDB -d- LendingsDBInter
+LendingsComp -d- LendingsCompInter
+
+routes -u- out
+routes -d-( routesCtr
+ctrl -u- routesCtr
+ctrl -l[hidden]- uRepo
+
+ctrl -d-( ctrlSer
+service -u- ctrlSer
+
+service -d-( model
+lend -u- model
+
+service -r-( lendDriver
+driver -l- lendDriver
+
+service -l-( userDriver
+uDriver -r- userDriver
+sRepo -r-( repo
+sRepo -d-( bRepo
+sRepo -l-( uRepo
+
+driver -u-( repo
+
+uDriver -u-( userHttpInterface
+uRepo -d- userHttpInterface
+
+sRepo -u-( lendHttpInterface
+lendHTTPDriver -d- lendHttpInterface
+
+repo -u-( lendDBInterface
+lendDBDriver -d- lendDBInterface
+
+uRepo -u-( userHttpInterface2
+userHTTPDriver -d- userHttpInterface2
+
+userHTTPDriver -u- dbLendings
+bookHTTPDriver -u- dbLendings
+
+lendHTTPDriver -u- apiLendings
+lendDBDriver -u- dbLendings
+lendHTTPDriver -r[hidden]- lendDBDriver
+
+service -l-( bookDriver
+bDriver -r- bookDriver
+
+bRepo -u-( bookHttpInterface
+bDriver -u-( bookHttpInterface
+
+bookHTTPDriver -d- bookHttpInterface2
+bRepo -u-( bookHttpInterface2
+
+sRepo -d-( userDriver
+service -u-( userDriver
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+actor Reader as R
+participant "booksC[1] : BooksC" as BooksService1
+participant "recommendationsC[1] : RecommendationsC" as RecommendationsService1
+
+box "Message Broker" #lightblue
+    participant "MB : MessageBroker" as MessageBroker
+end box
+
+R -> BooksService1: POST /recommendation (isbn, description, rating)
+BooksService1 -> BooksService1: validateISBN()
+BooksService1 -> MessageBroker: publish {book_returned, isbn, description, rating}
+MessageBroker --> BooksService1: 201
+BooksService1 --> R: 201 Book Returned with recommendation
+BooksService1 -> MessageBroker: publish {book_confirmed, isbn}
+
+MessageBroker -> RecommendationsService1: notify(book.returned.#, description, rating)
+RecommendationsService1 -> RecommendationsService1: saveRecommendation()
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+'autonumber
+autoactivate on
+
+!theme toy
+
+actor Reader as R
+participant RecommendationController as "RecommendationController"
+participant RecommendationService as "RecommendationService"
+participant RecommendationDBRepository as "RecommendationDBRepository"
+participant LendingDBRepository as "LendingDBRepository"
+participant RecommendationSender as "RecommendationSender"
+
+box "Message Broker" #lightblue
+    participant MessageBroker as "MessageBroker"
+end box
+
+R -> RecommendationController: POST /api/recommendation (isbn, description, rating)
+RecommendationController -> RecommendationService: createRecommendation(request, username)
+
+alt Lending Exists
+    RecommendationService -> LendingDBRepository: findLendingByUsernameAndISBN(username, isbn)
+    LendingDBRepository --> RecommendationService: Lending Found
+else Lending Does Not Exist
+    RecommendationService --> RecommendationController: null
+    RecommendationController --> R: 404 Not Found
+end
+
+RecommendationService -> RecommendationDBRepository: save(new Recommendation)
+RecommendationDBRepository --> RecommendationService: Recommendation Saved
+
+RecommendationService -> RecommendationSender: sendRecommendations(recommendation)
+RecommendationSender -> MessageBroker: convertAndSend(recommendationExchange, "recommendation.created.{username}", json)
+
+MessageBroker --> RecommendationSender: Acknowledgment Sent
+RecommendationService --> RecommendationController: Recommendation Created
+RecommendationController --> R: 201 Recommendation Saved
+
+@enduml

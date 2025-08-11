@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+!theme toy
+
+[o-> userC: Post/createUser
+
+participant userC
+participant userQ
+participant userC as userC1
+participant userQ as userQ1
+
+box "Message Broker" #lightblue
+    participant MB
+end box
+
+userC -> userC: saveUser({user.created.#, username, \n password, name, email, role, date_of_birth, \n phone_number, gdpr})
+userC -> MB: publish({user.created.#, username, \n password, name, email, role, date_of_birth, \n phone_number, gdpr})
+[o<-- userC: 201
+...
+
+MB -> userC: notify({user.created.#, username, \n password, name, email, role, date_of_birth, \n phone_number, gdpr})
+note left
+   Because the user was
+   created here, it's not saved again
+end note
+
+MB -> userQ: notify(user.created.#, user)
+userQ -> userQ: saveUser()
+return ok
+
+MB -> userC1: notify(user.created.#, user)
+userC1 -> userC1: saveUser()
+return ok
+
+MB -> userQ1: notify(user.created.#, user)
+userQ1 -> userQ1: saveUser()
+return ok
+
+@enduml

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/AuthorsCommands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AuthorsQueries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BooksCommands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/BooksQueries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LendingsCommands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LendingsQueries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RecommendationsCommands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/RecommendationsQueries/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UsersCommands/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UsersQueries/src/main/java" charset="UTF-8" />
+  </component>
+</project>

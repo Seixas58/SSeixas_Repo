@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+!theme toy
+
+box "Message Broker" #lightblue
+    participant MessageBroker as "MessageBroker"
+end box
+
+participant UserController as "UserReceiver"
+participant UserService as "UserService"
+participant UserRepository as "UserRepository"
+participant Entity as "user:User"
+participant dbRepository as "dbRepository"
+
+MessageBroker -> UserController :notify(user.created,userJson)
+UserController -> UserService: save(userJson)
+UserService -> UserRepository: save(userJson)
+UserRepository -> Entity: create
+UserRepository -> dbRepository: save(user)
+return user
+return user
+return user
+
+@enduml

@@ -1,0 +1,1434 @@
+{
+	"info": {
+		"_postman_id": "02782ade-f77b-47d3-8f4b-67a040be05f3",
+		"name": "Central City library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28014905",
+		"_collection_link": "https://martian-sunset-889071.postman.co/workspace/PSOFT-2024-Workspace~4ddcf94e-7bb5-4fde-9ade-9924ea018277/collection/28014905-02782ade-f77b-47d3-8f4b-67a040be05f3?action=share&source=collection_link&creator=28014905"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Get by ISBN",
+					"item": [
+						{
+							"name": "Get by ISBN /200 OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books?isbn=978-0-06-112008-4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books"
+									],
+									"query": [
+										{
+											"key": "isbn",
+											"value": "978-0-06-112008-4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by ISBN /JSON",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books?isbn=978-0-06-112008-4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books"
+									],
+									"query": [
+										{
+											"key": "isbn",
+											"value": "978-0-06-112008-4"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get by ISBN /ISBN expected",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books?isbn=978-0-06-112008-4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books"
+									],
+									"query": [
+										{
+											"key": "isbn",
+											"value": "978-0-06-112008-4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get By Genre",
+					"item": [
+						{
+							"name": "Get By Genre /200 OK",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books/search?genreName=Fiction",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books",
+										"search"
+									],
+									"query": [
+										{
+											"key": "genreName",
+											"value": "Fiction"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update book by ISBN",
+					"item": [
+						{
+							"name": "Update book by ISBN /200 OK",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"saimao\",\r\n    \"description\": \"saei\",\r\n    \"genre\": \"Fiction\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/books/978-0-446-50469-1",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books",
+										"978-0-446-50469-1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Regist Book",
+					"item": [
+						{
+							"name": "Regist book /201 Created",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"beatriz123@mail.com\",\r\n    \"password\": \"Biabia123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/public/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"public",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Regist book /400 Bad Request Titutlo em branco",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"beatriz123@mail.com\",\r\n    \"password\": \"Biabia123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/public/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"public",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Regist book /400 Bad Request titulo>128 carcateres",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"beatriz123@mail.com\",\r\n    \"password\": \"Biabia123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/api/public/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"public",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search by title",
+					"item": [
+						{
+							"name": "Search by title /200 OK",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books/search?title=\"To Kill a Mockingbird\"",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books",
+										"search"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "\"To Kill a Mockingbird\""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search by title /404  Not Found",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/books/search?title=\"To Kill a Mockingbird\"",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"books",
+										"search"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "\"To Kill a Mockingbird\""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Top 5 books lent",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Top 5 genres",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Create an author",
+					"item": [
+						{
+							"name": "Create an author /201 Created",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 name null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 name blank",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 name>150",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 shortbio null",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 shortbio>4096",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an author /400 shortbio blank",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Criação de um autor realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    pm.expect(resposta, \"Propriedades 'message' e 'authorNumber' devem retornar no cadastro com sucesso\").to.be.an('object')\r",
+											"       .that.has.all.keys('name','shortBio', 'authorNumber');\r",
+											"       \r",
+											"    pm.expect(resposta.name, \"Simao Seixas12\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Simao Seixas12\",\r\n    \"shortBio\": \"Gosta de ver ir para o BOATE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search authors by name",
+					"item": [
+						{
+							"name": "Search authors by name /200 OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Procura do autor pelo nome realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    // Verifica se a resposta é um array\r",
+											"    pm.expect(resposta).to.be.an('array').that.is.not.empty;\r",
+											"\r",
+											"    // Itera sobre cada item do array (presumindo que a resposta é uma lista de autores)\r",
+											"    resposta.forEach(function(autor) {\r",
+											"        // Verifica se cada item é um objeto com as chaves 'name', 'shortBio' e 'authorNumber'\r",
+											"        pm.expect(autor).to.be.an('object').that.has.all.keys('name', 'shortBio', 'authorNumber');\r",
+											"        \r",
+											"        // Verifica se as propriedades do autor correspondem aos valores esperados\r",
+											"        if (autor.name === \"Simao1\") {\r",
+											"            pm.expect(autor.shortBio).to.equal(\"Gosta de ver ir para o BOATE\");\r",
+											"            pm.expect(autor.authorNumber).to.equal(16);\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/author/authors?name=Simao1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"authors"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Simao1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search authors by name /200 OK Lista vazia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status deve ser 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Procura do autor pelo nome realizado com sucesso\", function () {\r",
+											"    let resposta = pm.response.json();\r",
+											"\r",
+											"    // Verifica se a resposta é um array\r",
+											"    pm.expect(resposta).to.be.an('array').that.is.not.empty;\r",
+											"\r",
+											"    // Itera sobre cada item do array (presumindo que a resposta é uma lista de autores)\r",
+											"    resposta.forEach(function(autor) {\r",
+											"        // Verifica se cada item é um objeto com as chaves 'name', 'shortBio' e 'authorNumber'\r",
+											"        pm.expect(autor).to.be.an('object').that.has.all.keys('name', 'shortBio', 'authorNumber');\r",
+											"        \r",
+											"        // Verifica se as propriedades do autor correspondem aos valores esperados\r",
+											"        if (autor.name === \"Simao1\") {\r",
+											"            pm.expect(autor.shortBio).to.equal(\"Gosta de ver ir para o BOATE\");\r",
+											"            pm.expect(autor.authorNumber).to.equal(16);\r",
+											"        }\r",
+											"    });\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/author/authors?name=Simao1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"authors"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Simao1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Edit a specific author by authorNumber",
+					"item": [
+						{
+							"name": "Edit a specific author by authorNumber /200 Ok Update name",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Bia Yummi Zarolho\",\r\n    \"shortBio\": \"Gosta de andar\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/update/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"update",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a specific author by authorNumber /200 Ok",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Bia Yummi Zarolho\",\r\n    \"shortBio\": \"Gosta de andar\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/update/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"update",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit a specific author by authorNumber /200 Ok Update shortBio",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Bia Yummi Zarolho\",\r\n    \"shortBio\": \"Gosta de andar\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/update/5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"update",
+										"5"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get an author´s detail by his author number",
+					"item": [
+						{
+							"name": "Get an author´s detail by his authorNumber /200 Ok",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/get?author=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"get"
+									],
+									"query": [
+										{
+											"key": "author",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get an author´s detail by his authorNumber /400 BadRequest",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/author/get?author=5",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"author",
+										"get"
+									],
+									"query": [
+										{
+											"key": "author",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create User",
+					"item": [
+						{
+							"name": "create user /200 OK",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"bia123@example.com\",\r\n    \"password\": \"bia12\",\r\n    \"name\": \"bia\",\r\n    \"dateOfBirth\": \"2003-11-03\",\r\n    \"phoneNumber\": \"914814746\",\r\n    \"gdpr\": true,\r\n    \"role\": \"Librarian\",\r\n    \"rePassword\": \"bia12\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"bia12333@example.com\",\r\n    \"password\": \"bia1332\",\r\n    \"name\": \"bia\",\r\n    \"dateOfBirth\": \"2003-11-03\",\r\n    \"phoneNumber\": \"914814746\",\r\n    \"gdpr\": true,\r\n    \"role\": \"Librarian\",\r\n    \"rePassword\": \"bia1332\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get User by Name",
+					"item": [
+						{
+							"name": "get user by name",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJleGFtcGxlLmlvIiwic3ViIjoiNCxiaWExMjM1QGV4YW1wbGUuY29tIiwiZXhwIjoxNzE4MDQ5ODAzLCJpYXQiOjE3MTgwMTM4MDMsInJvbGVzIjoiIn0.Umj7llwZ7E4zo_y32NWl_w-E77ptvK7uAEAhk1hoy3N3juW6hEv-xRyaWoSE4OEPuDbzEvVhvG_-c5e4iZERquq69FA4gIiChy6kKIM8juGO6jSLHXIGlJlRq4KsNRpgJHV6oPk5KnKl2-rJWcS3nMk9G-6KwjDfnrgKje1p0Bkm6bbsm36eFl1hhdir45U85EQlTEXo4sA5zXhC9EGM-5rSNMU_TOjKsCeVWPTaQ3CitnuIUkLq-aK58sNve0svOepxdM5wi-X2coJsMu4vx5UOqMiraIsNX1sPqAmnPfdRuf5WyZxhzJ-iHKrDDmLOJY6PFGB_X_hf9rctlw2PRBhszToBMHysGumXUlA-mgJEt2uS0Dg2O5DOC6lhsbRb2hp0TQzLhpEBg16Gg40PC8z5XQYkt3kiW55F-QBO-JSQFUhWdmdI1-jYpjd_PtbWBFir-9ZrDoNSAufchsnq5x5bC3gYEtu4hsfMbe9qpFUdC-rp1QomJePVAO0WQRMO650ScXbftMB3eyLiXuvBrwWEDtEpyHTuam8c2ro0ndScoZRl_Hk1c_4dCmOXsgVwykrcVMfHWwnwuTgYd2W7mi794mLn1wThqTFJ94EDMoUD0Syzei-t_ZMxthvrNPQlrY28A3i_ZvNo8tn9VINzolMPJN-xdnGAoitPEOewnek",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/user/bia",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"user",
+										"bia"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update a user",
+					"item": [
+						{
+							"name": "update user",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJleGFtcGxlLmlvIiwic3ViIjoiNCxiaWExMjM1QGV4YW1wbGUuY29tIiwiZXhwIjoxNzE4MDQ5ODAzLCJpYXQiOjE3MTgwMTM4MDMsInJvbGVzIjoiIn0.Umj7llwZ7E4zo_y32NWl_w-E77ptvK7uAEAhk1hoy3N3juW6hEv-xRyaWoSE4OEPuDbzEvVhvG_-c5e4iZERquq69FA4gIiChy6kKIM8juGO6jSLHXIGlJlRq4KsNRpgJHV6oPk5KnKl2-rJWcS3nMk9G-6KwjDfnrgKje1p0Bkm6bbsm36eFl1hhdir45U85EQlTEXo4sA5zXhC9EGM-5rSNMU_TOjKsCeVWPTaQ3CitnuIUkLq-aK58sNve0svOepxdM5wi-X2coJsMu4vx5UOqMiraIsNX1sPqAmnPfdRuf5WyZxhzJ-iHKrDDmLOJY6PFGB_X_hf9rctlw2PRBhszToBMHysGumXUlA-mgJEt2uS0Dg2O5DOC6lhsbRb2hp0TQzLhpEBg16Gg40PC8z5XQYkt3kiW55F-QBO-JSQFUhWdmdI1-jYpjd_PtbWBFir-9ZrDoNSAufchsnq5x5bC3gYEtu4hsfMbe9qpFUdC-rp1QomJePVAO0WQRMO650ScXbftMB3eyLiXuvBrwWEDtEpyHTuam8c2ro0ndScoZRl_Hk1c_4dCmOXsgVwykrcVMfHWwnwuTgYd2W7mi794mLn1wThqTFJ94EDMoUD0Syzei-t_ZMxthvrNPQlrY28A3i_ZvNo8tn9VINzolMPJN-xdnGAoitPEOewnek",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"bia1234@example.com\",\r\n    \"password\": \"bia1234\",\r\n    \"name\": \"bia\",\r\n    \"dateOfBirth\": \"2003-11-03\",\r\n    \"phoneNumber\": \"914814748\",\r\n    \"gdpr\": true,\r\n    \"role\": \"Librarian\",\r\n    \"rePassword\": \"bia1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/user/bia1235@example.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"bia1235@example.com"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get user by its reader number",
+					"item": [
+						{
+							"name": "get user by readernumber",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJleGFtcGxlLmlvIiwic3ViIjoiNCxiaWExMjM1QGV4YW1wbGUuY29tIiwiZXhwIjoxNzE4MDQ5ODAzLCJpYXQiOjE3MTgwMTM4MDMsInJvbGVzIjoiIn0.Umj7llwZ7E4zo_y32NWl_w-E77ptvK7uAEAhk1hoy3N3juW6hEv-xRyaWoSE4OEPuDbzEvVhvG_-c5e4iZERquq69FA4gIiChy6kKIM8juGO6jSLHXIGlJlRq4KsNRpgJHV6oPk5KnKl2-rJWcS3nMk9G-6KwjDfnrgKje1p0Bkm6bbsm36eFl1hhdir45U85EQlTEXo4sA5zXhC9EGM-5rSNMU_TOjKsCeVWPTaQ3CitnuIUkLq-aK58sNve0svOepxdM5wi-X2coJsMu4vx5UOqMiraIsNX1sPqAmnPfdRuf5WyZxhzJ-iHKrDDmLOJY6PFGB_X_hf9rctlw2PRBhszToBMHysGumXUlA-mgJEt2uS0Dg2O5DOC6lhsbRb2hp0TQzLhpEBg16Gg40PC8z5XQYkt3kiW55F-QBO-JSQFUhWdmdI1-jYpjd_PtbWBFir-9ZrDoNSAufchsnq5x5bC3gYEtu4hsfMbe9qpFUdC-rp1QomJePVAO0WQRMO650ScXbftMB3eyLiXuvBrwWEDtEpyHTuam8c2ro0ndScoZRl_Hk1c_4dCmOXsgVwykrcVMfHWwnwuTgYd2W7mi794mLn1wThqTFJ94EDMoUD0Syzei-t_ZMxthvrNPQlrY28A3i_ZvNo8tn9VINzolMPJN-xdnGAoitPEOewnek",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/user/readerNumber/4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"user",
+										"readerNumber",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get top 5 readers",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"seixas123@mail.com\",\r\n    \"password\":\"seixas123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/public/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Reader",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lendings",
+			"item": [
+				{
+					"name": "Lend a book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookTitle\":\"To Kill a Mockingbird\",\r\n    \"readerNumber\":3,\r\n    \"lendingDate\":\"2023-10-29\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/lending/lend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lending",
+								"lend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return a book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"returnDate\":\"2024-11-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/lending/return/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lending",
+								"return",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Details of a lending",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/lending/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lending",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "lend a book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookTitle\":\"To Kill a Mockingbird\",\r\n    \"readerNumber\":3,\r\n    \"lendingDate\":\"2023-10-29\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/lending/lend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"lending",
+								"lend"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "average per genre",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "lendings per month by genre",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Monthly lending per reader of a certain period",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

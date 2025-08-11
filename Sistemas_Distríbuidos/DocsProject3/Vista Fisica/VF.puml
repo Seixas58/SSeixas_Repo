@@ -1,0 +1,137 @@
+@startuml
+!theme toy
+
+node "Personal Computer" as sisdis {
+    component "AuthCommands:AuthC1" as authc1
+    component "AuthQueries:AuthQ1" as authq1
+    component "AuthorsCommands:AC1" as ac1
+    component "AuthorsQueries:AQ1" as aq1
+    component "BooksCommands:BC1" as bc1
+    component "BooksQueries:BQ1" as bq1
+    component "UserCommands:UC1" as uc1
+    component "UserQueries:UQ1" as uq1
+    component "LendingsCommands:LC1" as lc1
+    component "LendingsQueries:LQ1" as lq1
+    component "RecommendationsCommands:RC1" as rc1
+    component "RecommendationsQueries:RQ1" as rq1
+
+    component "AuthCommands:AuthC2" as authc2
+    component "AuthQueries:AuthQ2" as authq2
+    component "AuthorsCommands:AC2" as ac2
+    component "AuthorsQueries:AQ2" as aq2
+    component "BooksCommands:BC2" as bc2
+    component "BooksQueries:BQ2" as bq2
+    component "UserCommands:UC2" as uc2
+    component "UserQueries:UQ2" as uq2
+    component "LendingsCommands:LC2" as lc2
+    component "LendingsQueries:LQ2" as lq2
+    component "RecommendationsCommands:RC2" as rc2
+    component "RecommendationsQueries:RQ2" as rq2
+
+    component "auth-commands" as dbauthc1
+    component "auth-queries" as dbauthq1
+    component "authors-commands" as dbac1
+    component "authors-queries" as dbaq1
+    component "books-commands" as dbbc1
+    component "books-queries" as dbbq1
+    component "users-commands" as dbuc1
+    component "users-queries" as dbuq1
+    component "lendings-commands" as dblc1
+    component "lendings-queries" as dblq1
+    component "recommendations-commands" as dbrc1
+    component "recommendations-queries" as dbrq1
+
+    component "auth-commands" as dbauthc2
+    component "auth-queries" as dbauthq2
+    component "authors-commands" as dbac2
+    component "authors-queries" as dbaq2
+    component "books-commands" as dbbc2
+    component "books-queries" as dbbq2
+    component "users-commands" as dbuc2
+    component "users-queries" as dbuq2
+    component "lendings-commands" as dblc2
+    component "lendings-queries" as dblq2
+    component "recommendations-commands" as dbrc2
+    component "recommendations-queries" as dbrq2
+
+    component "Auth-Commands1" as dbauthc1
+    component "Auth-Queries1" as dbauthq1
+    component "Authors-Commands1" as dbac1
+    component "Authors-Queries1" as dbaq1
+    component "Books-Commands1" as dbbc1
+    component "Books-Queries1" as dbbq1
+    component "Users-Commands1" as dbuc1
+    component "Users-Queries1" as dbuq1
+    component "Lendings-Commands1" as dblc1
+    component "Lendings-Queries1" as dblq1
+    component "Recommendations-Commands1" as dbrc1
+    component "Recommendations-Queries1" as dbrq1
+
+    component "Auth-Commands2" as dbauthc2
+    component "Auth-Queries2" as dbauthq2
+    component "Authors-Commands2" as dbac2
+    component "Authors-Queries2" as dbaq2
+    component "Books-Commands2" as dbbc2
+    component "Books-Queries2" as dbbq2
+    component "Users-Commands2" as dbuc2
+    component "Users-Queries2" as dbuq2
+    component "Lendings-Commands2" as dblc2
+    component "Lendings-Queries2" as dblq2
+    component "Recommendations-Commands2" as dbrc2
+    component "Recommendations-Queries2" as dbrq2
+
+    authc1 ----- dbauthc1 : SQL/TCP
+    authq1 ----- dbauthq1 : SQL/TCP
+    ac1 ----- dbac1 : SQL/TCP
+    aq1 ----- dbaq1 : SQL/TCP
+    bc1 ----- dbbc1 : SQL/TCP
+    bq1 ----- dbbq1 : SQL/TCP
+    uc1 ----- dbuc1 : SQL/TCP
+    uq1 ----- dbuq1 : SQL/TCP
+    lc1 ----- dblc1 : SQL/TCP
+    lq1 ----- dblq1 : SQL/TCP
+    rc1 ----- dbrc1 : SQL/TCP
+    rq1 ----- dbrq1 : SQL/TCP
+
+    authc2 ----- dbauthc2 : SQL/TCP
+    authq2 ----- dbauthq2 : SQL/TCP
+    ac2 ----- dbac2 : SQL/TCP
+    aq2 ----- dbaq2 : SQL/TCP
+    bc2 ----- dbbc2 : SQL/TCP
+    bq2 ----- dbbq2 : SQL/TCP
+    uc2 ----- dbuc2 : SQL/TCP
+    uq2 ----- dbuq2 : SQL/TCP
+    lc2 ----- dblc2 : SQL/TCP
+    lq2 ----- dblq2 : SQL/TCP
+    rc2 ----- dbrc2 : SQL/TCP
+    rq2 ----- dbrq2 : SQL/TCP
+
+    component "Message Broker" as broker
+
+    authc1 ---- broker : AMQP
+    authq1 ---- broker : AMQP
+    ac1 ---- broker : AMQP
+    aq1 ---- broker : AMQP
+    bc1 ---- broker : AMQP
+    bq1 ---- broker : AMQP
+    uc1 ---- broker : AMQP
+    uq1 ---- broker : AMQP
+    lc1 ---- broker : AMQP
+    lq1 ---- broker : AMQP
+    rc1 ---- broker : AMQP
+    rq1 ---- broker : AMQP
+
+    authc2 ---- broker : AMQP
+    authq2 ----broker : AMQP
+    ac2 ---- broker : AMQP
+    aq2 ---- broker : AMQP
+    bc2 ---- broker : AMQP
+    bq2 ---- broker : AMQP
+    uc2 ---- broker : AMQP
+    uq2 ---- broker : AMQP
+    lc2 ---- broker : AMQP
+    lq2 ---- broker : AMQP
+    rc2 ---- broker : AMQP
+    rq2 ---- broker : AMQP
+
+@enduml

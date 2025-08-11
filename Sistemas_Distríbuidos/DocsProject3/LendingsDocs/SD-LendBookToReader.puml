@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+!theme toy
+
+participant LendController as "LendController"
+participant LendService as "LendService"
+participant BookRepository as "BookRepository"
+participant ReaderRepository as "ReaderRepository"
+participant LendRepository as "LendRepository"
+
+[o-> LendController : POST /lendBookToReader
+LendController -> LendService: lendBook(reader_number, ISBN)
+
+LendService -> BookRepository: findById(ISBN)
+alt Book exists
+    return book
+else Book does not exist
+    return error("Book not found")
+end
+
+LendService -> ReaderRepository: findById(reader_number)
+
+alt Reader exists
+    return reader
+
+else Reader does not exist
+LendService --> LendController: error("Reader not found")
+end
+
+LendService -> LendRepository: countByReader_Number(reader_number)
+alt Reader has less than 3 lends
+    return lendCount
+    LendService -> LendRepository: createLend(reader_number, ISBN)
+    return lend
+else Reader has 3 or more lends
+LendService --> LendController: error("Maximum lends reached")
+end
+
+[o<-- LendController: Response (Success/Error)
+
+@enduml

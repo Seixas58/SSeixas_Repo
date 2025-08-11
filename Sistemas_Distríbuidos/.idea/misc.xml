@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/BooksQueries/pom.xml" />
+        <option value="$PROJECT_DIR$/UsersQueries/pom.xml" />
+        <option value="$PROJECT_DIR$/BooksCommands/pom.xml" />
+        <option value="$PROJECT_DIR$/UsersCommands/pom.xml" />
+        <option value="$PROJECT_DIR$/AuthorsQueries/pom.xml" />
+        <option value="$PROJECT_DIR$/AuthorsCommands/pom.xml" />
+        <option value="$PROJECT_DIR$/LendingsQueries/pom.xml" />
+        <option value="$PROJECT_DIR$/LendingsCommands/pom.xml" />
+        <option value="$PROJECT_DIR$/RecommendationsQueries/pom.xml" />
+        <option value="$PROJECT_DIR$/RecommendationsCommands/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

@@ -1,0 +1,14 @@
+@startuml
+actor Reader as R
+participant "HTTP Client" as Client
+participant "Recommendation Service" as Recommend
+participant "Rabbit" as Rabbit
+
+R -> Client: Send a recommendation
+Client -> Recommend: POST /recommendation (isbn, description, rating)
+Recommend --> Client: 202 Accepted
+Client --> R: 200 OK
+
+Recommend -> Rabbit: Publish "Send Recommendation"
+Rabbit --> Recommend: "Recommendation Registered"
+@enduml

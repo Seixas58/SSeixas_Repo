@@ -1,0 +1,32 @@
+@startuml
+actor Librarian as L
+participant "booksC[1] : BooksC" as BooksService1
+participant "booksC[2] : BooksC" as BooksService2
+participant "authorsC[1] : AuthorsC" as AuthorsService1
+
+box "Message Broker" #lightblue
+    participant "MB : MessageBroker" as MessageBroker
+end box
+
+L -> BooksService1: POST /create/all (isbn, title, description, genre, authors, coverPhoto)
+BooksService1 -> BooksService2: checkBookData()
+BooksService2 --> BooksService1: bookDataValid()
+
+BooksService1 -> AuthorsService1: validateAuthorsData()
+AuthorsService1 --> BooksService1: authorsDataValid()
+
+BooksService1 -> BooksService1: save(isbn, title, description, genre, authors, coverPhoto)
+BooksService1 -> MessageBroker: publish {book_created, isbn, title, description, genre, authors}
+MessageBroker --> BooksService1: 201
+
+BooksService1 --> L: 201 Created
+
+BooksService1 -> MessageBroker: publish {book_confirmed, isbn}
+
+MessageBroker -> BooksService2: notify(book.created.#, book)
+BooksService2 -> BooksService2: saveBook()
+
+MessageBroker -> AuthorsService1: notify(book.created.#, book)
+AuthorsService1 -> AuthorsService1: saveBook()
+
+@enduml

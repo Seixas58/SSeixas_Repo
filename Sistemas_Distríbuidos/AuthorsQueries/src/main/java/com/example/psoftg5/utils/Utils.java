@@ -1,0 +1,21 @@
+package com.example.psoftg5.utils;
+
+import java.time.LocalDateTime;
+import org.springframework.cglib.core.Local;
+
+public class Utils {
+    public static LocalDateTime parseString(String stringDate) {
+        String[] parts = stringDate.split("-");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Invalid date format");
+        }
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int day = Integer.parseInt(parts[2]);
+
+
+        return LocalDateTime.of(year,month,day,0,0);
+    }
+
+
+}

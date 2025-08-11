@@ -1,0 +1,44 @@
+@startuml
+'autonumber
+autoactivate on
+
+!theme toy
+
+actor Librarian as L
+participant BookController as "BookController"
+participant BookService as "BookService"
+participant BookRepository as "BookRepository"
+participant AuthorService as "AuthorService"
+participant BookSender as "BookSender"
+participant BookDBRepository as "BookDBRepository"
+participant Book as " book:Book"
+
+
+box "Message Broker" #lightblue
+    participant MesssageBroker as "MesssageBroker"
+end box
+
+[o-> BookController: POST /create/all (isbn, title, description, genre, authors, coverPhoto)
+BookController -> BookService: createBookAll(data)
+
+BookService -> BookRepository: checkBookData()
+return bookDataValid
+
+BookService -> AuthorService: validateAuthors(authors)
+return authorsValid
+
+BookRepository -> Book: Book(isbn, title, description, genre, authors, coverPhoto)
+
+BookService -> BookDBRepository: saveBook(isbn, title, description, genre, authors, coverPhoto)
+return
+
+BookService -> BookSender:sendCreatedBook(book)
+BookSender -> MesssageBroker: convertAndSend(topic.getName(), "book.created.");
+
+return
+return
+BookService --> BookController:
+[o<--BookController: 201 Created
+
+
+@enduml

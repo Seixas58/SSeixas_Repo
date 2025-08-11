@@ -1,0 +1,17 @@
+package com.example.psoftg5.lendingmanagement.api;
+
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+public class LendingDTO {
+    private Long lendingNumber;
+    private String isbn;
+    private LocalDate lendingDate;
+    private LocalDate returnDate;
+    private long numberOfDaysTillReturn = 14;
+    /*private boolean overdue;
+    private long daysInOverdue;
+    private double fineAmount;*/
+}

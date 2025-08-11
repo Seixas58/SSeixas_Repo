@@ -1,0 +1,18 @@
+@startuml
+actor Librarian as L
+participant "HTTP Client" as Client
+participant "Books Service" as Books
+participant "Authors Service" as Authors
+participant "Rabbit" as rabbit
+
+L -> Client: Request to create a Book, Author, and Genre
+Client -> Books: POST /create/all (with author and genre info)
+Books --> Client: 202 Book Accepted
+Client --> L: 200 ok
+Books -> rabbit: Create Author
+rabbit --> Authors: Author Created
+Authors --> rabbit: Author Create
+rabbit --> Books: Author Created
+
+@enduml
+

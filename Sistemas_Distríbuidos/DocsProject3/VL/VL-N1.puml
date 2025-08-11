@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme toy
+
+component "project 2 sisdis" as sidis {
+        portin "REST API Auth Queries" as apiAuthq
+        portin "REST API Auth Commands" as apiAuthc
+        portin "REST API Authors Queries" as apiAq
+        portin "REST API Authors Commands" as apiAc
+        portin "REST API Recommendations Queries" as apiRq
+        portin "REST API Recommendations Commands" as apiRc
+        portin "REST API Books Queries" as apiBq
+        portin "REST API Books Commands" as apiBc
+        portin "REST API Users Queries" as apiUq
+        portin "REST API Users Commands" as apiUc
+        portin "REST API Lendings Queries" as apiLq
+        portin "REST API Lendings Commands" as apiLc
+}
+
+interface "HTTP Client" as HTTPauthq
+interface "HTTP Client" as HTTPauthc
+interface "HTTP Client" as HTTPaq
+interface "HTTP Client" as HTTPac
+interface "HTTP Client" as HTTPrq
+interface "HTTP Client" as HTTPrc
+interface "HTTP Client" as HTTPbq
+interface "HTTP Client" as HTTPbc
+interface "HTTP Client" as HTTPuq
+interface "HTTP Client" as HTTPuc
+interface "HTTP Client" as HTTPlq
+interface "HTTP Client" as HTTPlc
+
+HTTPauthq -- apiAuthq
+HTTPauthc -- apiAuthc
+HTTPaq -- apiAq
+HTTPac -- apiAc
+HTTPrq -- apiRq
+HTTPrc -- apiRc
+HTTPbq -- apiBq
+HTTPbc -- apiBc
+HTTPuq -- apiUq
+HTTPuc -- apiUc
+HTTPlq -- apiLq
+HTTPlc -- apiLc
+
+
+@enduml

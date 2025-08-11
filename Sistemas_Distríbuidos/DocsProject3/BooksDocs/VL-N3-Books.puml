@@ -1,0 +1,90 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme toy
+interface " " as HttpClient
+interface "database" as db
+interface " " as rabbit
+
+component "Http Client" as NodeHTTP
+
+component "RabbitMQ" as BooksComp
+component "BooksCommands" as BooksDB
+
+component "<<BooksCommands>>" as books {
+
+    portin "REST API Books" as outBooks
+    portin "RabbitMQ" as apiBooks
+    portin "DB" as dbBooks
+
+    component "Routes" as routesBooks
+    component "BookController" as bookController
+    component "BookService" as bookService
+    component "Book model" as book
+    component "BookReceiver" as bookReceiver
+    component "BooksDBRepository" as booksDBRepository
+    component "BookRepository" as bookRepository
+    component "Driver Books DB" as bookDriver
+    component "Driver Authors DB" as authorDriver
+    component "MessageBroker" as messageBrokerBooks
+
+    component "AuthorsDBRepository" as authorsDBRepository
+    component "AuthorRepository" as authorRepository
+
+    interface " " as modelBooks
+    interface " " as bookC
+    interface " " as bookDBRepo
+    interface " " as bookR
+    interface " " as bookS
+    interface " " as bookRepo
+
+    interface " " as authorDBRepo
+    interface " " as authorRepo
+}
+
+NodeHTTP -d-( HttpClient
+HttpClient -d- outBooks
+outBooks -d- routesBooks
+
+routesBooks -d-( bookC
+bookController -u- bookC
+
+bookController -d- bookS
+bookService -u-( bookS
+
+bookService -d-( modelBooks
+book -u- modelBooks
+
+BooksComp -d- rabbit
+apiBooks -u-( rabbit
+apiBooks -d- messageBrokerBooks
+
+messageBrokerBooks -d- bookR
+bookReceiver -u-( bookR
+bookService -d-( bookR
+
+bookReceiver -d-( bookDBRepo
+booksDBRepository -u-( bookDBRepo
+bookReceiver -d-( authorDBRepo
+authorsDBRepository -u-( authorDBRepo
+
+authorsDBRepository -u-( authorRepo
+authorRepository -d- authorRepo
+
+booksDBRepository -d- bookRepo
+bookRepository -u-( bookRepo
+
+bookRepository -d- bookS
+
+BooksDB -d- db
+dbBooks -u-( db
+
+dbBooks -d- authorDriver
+authorDriver -u- authorDBRepo
+
+dbBooks -d- bookDriver
+bookDriver -d- bookDBRepo
+
+authorRepository -d- bookS
+
+@enduml

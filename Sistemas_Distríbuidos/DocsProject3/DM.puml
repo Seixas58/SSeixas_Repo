@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+hide circle
+hide methods
+
+!theme toy
+
+class User #5A86AF {
++username
++password
++name
++email
++role
++date_of_birth
++phone_number
++gdpr
+}
+
+class Genre #5A86AF  {
++ name
+}
+
+class Auth #5A86AF  {
++authority
+}
+
+class Author #5A86AF  {
++name
++short_bio
++author_number
+}
+
+class Book #5A86AF  {
++isbn
++title
++genre
++description
++author
+}
+
+class Lending #5A86AF  {
++lending_number
++librarian_number
++reader_number
++book_title
++lending_date
++return_date
++number_of_days_till_return_date
++number_of_days_in_overdue
++fine_amount
+}
+
+Book "1" -right- "1..*" Author : > has a
+Book "1..*" -down- "1..*" Lending : > can be
+Genre "1..*" -right- "1..*" Book : < has a
+User "1..*" -down- "1..*" Lending : < has a
+Auth "1" -right- "1..*" User : < has a
+@enduml

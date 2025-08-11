@@ -1,0 +1,73 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme toy
+interface " " as HttpClient
+interface "database" as db
+interface " " as rabbit
+
+component "Http Client" as NodeHTTP
+
+component "RabbitMQ" as UsersComp
+component "UsersCommands" as UsersDB
+
+component "<<Users Commands>>" as users {
+
+    portin "REST API Users" as out
+    portin "RabbitMQ" as apiUsers
+    portin "DB" as dbUsers
+
+    component "Routes" as routes
+    component "UserController" as userController
+    component "UserService" as userService
+    component "User model" as user
+    component "UserReceiver" as userReceiver
+    component "UsersDBRepository" as usersDBRepository
+    component "UserRepository" as userRepository
+    component "Driver Users DB" as userDriver
+    component "MessageBroker" as messageBroker
+
+    interface " " as model
+    interface " " as userC
+    interface " " as userDBRepo
+    interface " " as userR
+    interface " " as userS
+    interface " " as userRepo
+}
+
+NodeHTTP -d-( HttpClient
+HttpClient -d- out
+out -d- routes
+
+routes -d-( userC
+userController -u- userC
+
+userController -d-( userS
+userService -u-( userS
+
+userService -d-( model
+user -u- model
+
+UsersComp -d- rabbit
+apiUsers -u-( rabbit
+apiUsers -d- messageBroker
+
+messageBroker -d- userR
+userReceiver -u-( userR
+userService -d-( userR
+
+userReceiver -d-( userDBRepo
+usersDBRepository -u-( userDBRepo
+
+usersDBRepository -d- userRepo
+userRepository -u-( userRepo
+
+userRepository -d- userS
+
+UsersDB -d- db
+dbUsers -u-( db
+
+dbUsers -d- userDriver
+userDriver -d- userDBRepo
+
+@enduml

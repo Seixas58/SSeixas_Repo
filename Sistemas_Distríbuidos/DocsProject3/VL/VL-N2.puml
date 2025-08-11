@@ -1,0 +1,111 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+!theme toy
+
+component "project 2 sisdis" {
+        portin "REST API Auth" as apiAuth
+        portin "REST API Authors Queries" as apiAq
+        portin "REST API Authors Commands" as apiAc
+        portin "REST API Books Queries" as apiBq
+        portin "REST API Books Commands" as apiBc
+        portin "REST API Users Queries" as apiUq
+        portin "REST API Users Commands" as apiUc
+        portin "REST API Lendings Queries" as apiLq
+        portin "REST API Lendings Commands" as apiLc
+        portin "REST API Recommendations Queries" as apiRq
+        portin "REST API Recommendations Commands" as apiRc
+
+    component "Auth" as auth
+    component "AuthorsQueries" as authorsQ
+    component "BooksQueries" as booksQ
+    component "UsersQueries" as usersQ
+    component "LendingsQueries" as lendingsQ
+    component "RecommendationsQueries" as recommendationsQ
+    component "AuthorsCommands" as authorsC
+    component "BooksCommands" as booksC
+    component "UsersCommands" as usersC
+    component "LendingsCommands" as lendingsC
+    component "RecommendationsCommands" as recommendationsC
+
+    component "Message Broker" as MB
+    interface "Publish API" as publishAPI
+}
+
+interface "HTTP Client" as HTTPac
+interface "HTTP Client" as HTTPaq
+interface "HTTP Client" as HTTPbc
+interface "HTTP Client" as HTTPbq
+interface "HTTP Client" as HTTPuc
+interface "HTTP Client" as HTTPuq
+interface "HTTP Client" as HTTPlc
+interface "HTTP Client" as HTTPlq
+interface "HTTP Client" as HTTPrc
+interface "HTTP Client" as HTTPrq
+
+interface "notifyAPIAuthorsQ" as notifyAPIAuthorsQ
+interface "notifyAPIBooksQ" as notifyAPIBooksQ
+interface "notifyAPIUsersQ" as notifyAPIUsersQ
+interface "notifyAPILendingsQ" as notifyAPILendingsQ
+interface "notifyAPIRecommendationsQ" as notifyAPIRecommendationsQ
+interface "notifyAPIAuthorsC" as notifyAPIAuthorsC
+interface "notifyAPIBooksC" as notifyAPIBooksC
+interface "notifyAPIUsersC" as notifyAPIUsersC
+interface "notifyAPILendingsC" as notifyAPILendingsC
+interface "notifyAPIRecommendationsC" as notifyAPIRecommendationsC
+
+
+publishAPI -d- MB
+
+HTTPaq -- apiAq
+HTTPac -- apiAc
+HTTPrq -- apiRq
+HTTPrc -- apiRc
+HTTPbq -- apiBq
+HTTPbc -- apiBc
+HTTPuq -- apiUq
+HTTPuc -- apiUc
+HTTPlq -- apiLq
+HTTPlc -- apiLc
+
+apiAuth -- auth
+apiAq -- authorsQ
+apiRq -- recommendationsQ
+apiBq -- booksQ
+apiUq -- usersQ
+apiLq -- lendingsQ
+apiAc -- authorsC
+apiRc -- recommendationsC
+apiBc -- booksC
+apiUc -- usersC
+apiLc -- lendingsC
+
+authorsQ -down- notifyAPIAuthorsQ
+recommendationsQ -down- notifyAPIRecommendationsQ
+booksQ -down- notifyAPIBooksQ
+usersQ -down- notifyAPIUsersQ
+lendingsQ -down- notifyAPILendingsQ
+authorsC -down- notifyAPIAuthorsC
+recommendationsC -down- notifyAPIRecommendationsC
+booksC -down- notifyAPIBooksC
+usersC -down- notifyAPIUsersC
+lendingsC -down- notifyAPILendingsC
+
+authorsC -d-(  publishAPI
+recommendationsC -d-(  publishAPI
+booksC -d-(  publishAPI
+usersC -d-(  publishAPI
+lendingsC -d-(  publishAPI
+
+MB -down-( notifyAPIAuthorsQ
+MB -down-( notifyAPIRecommendationsQ
+MB -down-( notifyAPIBooksQ
+MB -down-( notifyAPIUsersQ
+MB -down-( notifyAPILendingsQ
+MB -down-( notifyAPIAuthorsC
+MB -down-( notifyAPIRecommendationsC
+MB -down-( notifyAPIBooksC
+MB -down-( notifyAPIUsersC
+MB -down-( notifyAPILendingsC
+
+@enduml

@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+!theme toy
+
+box "Message Broker" #lightblue
+    participant MessageBroker as "MessageBroker"
+end box
+
+participant LendingController as "LendingReceiver"
+participant LendingService as "LendingService"
+participant BookRepository as "BookRepository"
+participant UserRepository as "UserRepository"
+participant LendingRepository as "LendingRepository"
+participant Lending as "Lending"
+participant dbRepository as "dbRepository"
+participant Entity as "lending:Lending"
+
+MessageBroker -> LendingController : notify(lending.created, lendingJson)
+LendingController -> LendingService : save(lendingJson)
+LendingService -> BookRepository : save(lendingJson)
+BookRepository -> Entity : create
+BookRepository -> dbRepository : save(book)
+dbRepository --> BookRepository : book
+BookRepository --> LendingService : book
+
+LendingService -> UserRepository : save(lendingJson)
+UserRepository -> Entity : create
+UserRepository -> dbRepository : save(user)
+dbRepository --> UserRepository : user
+UserRepository --> LendingService : user
+
+LendingService -> LendingRepository : create(lendingJson, book, user)
+LendingRepository -> Entity : create
+LendingRepository -> dbRepository : save(lending)
+dbRepository --> LendingRepository : lending
+
+LendingRepository --> LendingService : lending
+LendingService -> LendingController : lending
+
+@enduml

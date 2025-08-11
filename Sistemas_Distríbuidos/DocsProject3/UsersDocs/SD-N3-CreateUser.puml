@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+autoactivate on
+
+!theme toy
+
+participant UserController as "UserController"
+participant UserService as "UserService"
+participant UserRepository as "UserRepository"
+participant dbRepository as "dbRepository"
+participant User as "user:User"
+participant UserSender as "UserSender"
+
+box "Message Broker" #lightblue
+    participant MesssageBroker as "MessageBroker"
+end box
+
+[o-> UserController: POST/createUser
+UserController -> UserService: create
+
+UserService -> UserRepository: create(resource, username)
+
+UserRepository -> dbRepository: findByEmail(username).isPresent()
+return null
+UserRepository -> User:User(username,password, name, email,\n role, date_of_birth, phone_number, gdpr)
+
+UserRepository--> UserService:
+UserRepository -> dbRepository: save(user)
+return
+return
+
+UserService -> UserSender:sendCreatedUser(user)
+UserSender -> MesssageBroker: convertAndSend(topic.getName(), "user.created."+ user.getEmail(), entity);
+
+return
+return user
+UserService --> UserController:
+[o<--UserController: 201
+
+@enduml
